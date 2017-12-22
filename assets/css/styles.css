@@ -1,0 +1,41 @@
+* {
+  font-family: "Lato";
+}
+
+body {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #fff;
+  font-family: "Raleway";
+}
+
+.fa {
+  padding: 10px 14px;
+  -o-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+.fa:hover {
+  color: #fff;
+}
+.fa {
+  padding: 10px 12px;
+}
+.fa-twitter:hover {
+  background-color: #00aced;
+}
+.fa-youtube:hover {
+  background-color: #e64a41;
+}
+.fa-linkedin:hover {
+  background-color: #0073a4;
+}
