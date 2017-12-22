@@ -42,6 +42,7 @@ class LastDays extends React.Component {
 
   getPosts({ sinceDay }) {
     const { edges } = this.props.posts;
+    // console.log("cmp/LastDays#getPosts edges", edges);
     let posts = edges.filter(({ node }) => {
       let isSelected = false;
       const minTimestamp = Number(
@@ -68,7 +69,7 @@ class LastDays extends React.Component {
     // const days = [];
     posts = _.sortBy(posts, ["timestamp"]);
     posts.reverse();
-    posts = posts.slice(0, 3);
+    // posts = posts.slice(0, 3);
     const group = this.groupArray({ grouper: "timestamp", array: posts });
     return group;
   }
@@ -194,7 +195,7 @@ class LastDays extends React.Component {
 
   render() {
     let days = this.getDays();
-    // console.log("cmp/LastDays#render days", days);
+    console.log("cmp/LastDays#render days", days);
     days = days.slice(0, 3);
     return (
       <div className="row">
