@@ -195,7 +195,7 @@ class LastDays extends React.Component {
 
   render() {
     let days = this.getDays();
-    console.log("cmp/LastDays#render days", days);
+    // console.log("cmp/LastDays#render days", days);
     days = days.slice(0, 3);
     return (
       <div className="row">
