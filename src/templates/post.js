@@ -10,6 +10,7 @@ import Styles from "../utils/Styles";
 
 import Icon from "../components/Icon";
 import LastDays from "../components/LastDays";
+import PostNavigation from "../components/post/PostNavigation";
 
 const headersStyle = {};
 for (let i = 0; i < 6; i++) {
@@ -29,8 +30,8 @@ const styles = {
       backgroundColor: "rgba(185, 0, 0, .1)",
       margin: "10px 0",
       paddingLeft: 40,
-      paddingTop: "0.5em",
-      paddingBottom: "0.5em",
+      paddingTop: "1.5em",
+      paddingBottom: "1.5em",
       position: "relative"
     },
     "& blockquote::before": {
@@ -47,6 +48,9 @@ const styles = {
       position: "absolute",
       left: 5,
       top: 5
+    },
+    "& blockquote > *": {
+      margin: 0
     }
   }
 };
@@ -92,6 +96,7 @@ class PostTemplate extends Component {
           />
           <div className="col-12" style={{ marginTop: 70 }} />
         </div>
+        <PostNavigation posts={allWordpressPost} date={post.date} />
         <div
           className="row"
           style={{
