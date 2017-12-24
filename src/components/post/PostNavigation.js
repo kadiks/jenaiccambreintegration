@@ -28,10 +28,10 @@ class PostNavigation extends React.Component {
     filteredPosts = filteredPosts.map(day => day.node);
     filteredPosts = _.sortBy(filteredPosts, ["timestamp"]);
     // filteredPosts.reverse();
-    console.log(
-      "cmp/PostNavigation#getNextDaysPosts filteredPosts",
-      filteredPosts
-    );
+    // console.log(
+    //   "cmp/PostNavigation#getNextDaysPosts filteredPosts",
+    //   filteredPosts
+    // );
     if (filteredPosts.length === 1) {
       return [null, filteredPosts[0]];
     }
