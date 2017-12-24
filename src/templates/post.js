@@ -22,12 +22,32 @@ for (let i = 0; i < 6; i++) {
 const styles = {
   headers: headersStyle,
   quote: {
-    borderLeft: `3px solid ${Styles.colors.main}`,
-    backgroundColor: "rgba(185, 0, 0, .1)",
-    margin: 0,
-    paddingLeft: 40,
-    paddingTop: "0.5em",
-    paddingBottom: "0.5em"
+    "& blockquote": {
+      fontWeight: "bold",
+      fontStyle: "italic",
+      borderLeft: `3px solid ${Styles.colors.main}`,
+      backgroundColor: "rgba(185, 0, 0, .1)",
+      margin: "10px 0",
+      paddingLeft: 40,
+      paddingTop: "0.5em",
+      paddingBottom: "0.5em",
+      position: "relative"
+    },
+    "& blockquote::before": {
+      // https://codepen.io/maxds/pen/DcveB
+      content: "\\201C",
+
+      /*Font*/
+      fontFamily: "Georgia, serif",
+      fontSize: 60,
+      fontWeight: "bold",
+      color: "#AAA",
+
+      /*Positioning*/
+      position: "absolute",
+      left: 5,
+      top: 5
+    }
   }
 };
 
@@ -67,7 +87,7 @@ class PostTemplate extends Component {
             dangerouslySetInnerHTML={{ __html: post.title }}
           />
           <div
-            css={headersStyle}
+            css={[styles.headers, styles.quote]}
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
           <div className="col-12" style={{ marginTop: 70 }} />
