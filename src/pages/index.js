@@ -13,6 +13,7 @@ import Activities from "../components/activity";
 import LastDays from "../components/LastDays";
 import FooterKyeda from '../components/footer/FooterKyeda';
 import FooterKryptonik from '../components/footer/FooterKryptonik';
+import LinkFlag from "../components/flags/Link";
 
 class Home extends Component {
   render() {
@@ -25,6 +26,7 @@ class Home extends Component {
             {data.site.siteMetadata.title} - {data.site.siteMetadata.subtitle}
           </title>
         </Helmet>
+        <LinkFlag />
         <div className="col-12" style={{ marginTop: 20 }} />
         <ProfilePicture />
         <div className="col-12" style={{ marginTop: 20 }} />
