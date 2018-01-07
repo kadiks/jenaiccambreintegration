@@ -79,6 +79,9 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                     status
                     template
                     format
+                    tags {
+                      name
+                    }
                   }
                 }
               }
@@ -97,7 +100,8 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             // console.log("gatsby-node results", edge);
             const date = edge.node.date;
             const slug = edge.node.slug;
-            const daySlug = getDaySlug({ slug, date });
+            const tags = edge.node.tags || [];
+            const daySlug = getDaySlug({ slug, date, tags });
             createPage({
               path: daySlug,
               component: slash(postTemplate),
@@ -113,10 +117,12 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
   });
 };
 
-const getDaySlug = ({ date, slug }) => {
-  // console.log("#getDaySlug date", date);
+const getDaySlug = ({ date, slug, tags = [] }) => {
+  const tagsNames = tags.map(t => t.name);
+  // console.log("#getDaySlug tagsNames", tagsNames);
+  const language = tagsNames.includes("french") ? "fr" : "en";
   const y = moment(date).format("YYYY");
   const m = moment(date).format("MM");
   const d = moment(date).format("DD");
-  return `en/${y}/${m}/${d}/${slug}`;
+  return `${language}/${y}/${m}/${d}/${slug}`;
 };

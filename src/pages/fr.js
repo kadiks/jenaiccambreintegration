@@ -14,6 +14,8 @@ import LastDays from "../components/LastDays";
 import FooterKyeda from '../components/footer/FooterKyeda';
 import FooterKryptonik from '../components/footer/FooterKryptonik';
 
+const LANGUAGE = "fr";
+
 class Home extends Component {
   render() {
     const data = this.props.data;
@@ -40,11 +42,12 @@ class Home extends Component {
             <LastDays
               posts={data.allWordpressPost}
               activities={data.allPhoenixDaily}
+              language={LANGUAGE}
             />
           </div>
         </div>
-        <FooterKyeda />
-        <FooterKryptonik />
+        <FooterKyeda language={LANGUAGE} />
+        <FooterKryptonik language={LANGUAGE} />
       </div>
     );
     return (
@@ -123,7 +126,7 @@ export default Home;
 // `
 
 export const pageQuery = graphql`
-  query homePageQuery {
+  query frHomePageQuery {
     allWordpressPost(sort: { fields: [date], order: DESC }) {
       edges {
         node {

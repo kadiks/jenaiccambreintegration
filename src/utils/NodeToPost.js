@@ -1,0 +1,5 @@
+class NodeToPost {
+  constructor({node}) {
+    
+  }
+}

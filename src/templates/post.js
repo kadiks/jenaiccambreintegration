@@ -11,6 +11,7 @@ import Styles from "../utils/Styles";
 import Icon from "../components/Icon";
 import LastDays from "../components/LastDays";
 import PostNavigation from "../components/post/PostNavigation";
+import OtherLanguagePost from "../components/post/OtherLanguagePost";
 
 const headersStyle = {};
 for (let i = 0; i < 6; i++) {
@@ -64,6 +65,8 @@ class PostTemplate extends Component {
       allWordpressPost,
       allPhoenixDaily
     } = this.props.data;
+    const language = this.props.location.pathname.slice(1, 3);
+    moment.locale(language);
     const post = wordpressPost;
 
     return (
@@ -76,7 +79,7 @@ class PostTemplate extends Component {
         </Helmet>
         <div className="col-12 col-md-8 offset-md-2">
           <Link
-            to="/"
+            to={language === "en" ? "/" : "/fr"}
             css={{
               color: Styles.colors.main,
               ":hover": { color: Styles.colors.main },
@@ -85,18 +88,19 @@ class PostTemplate extends Component {
           >
             <i className="fa fa-home" style={{ color: Styles.colors.main }} />
           </Link>
-          <small>{moment(post.date).format("ddd, Do YYYY")}</small>
+          <small>{moment(post.date).format(language === "en" ? "ddd, Do MMM YYYY" : "dddd D MMM YYYY")}</small>
           <h1
             style={{ color: Styles.colors.main, fontSize: "2.5em" }}
             dangerouslySetInnerHTML={{ __html: post.title }}
           />
+          <OtherLanguagePost language={language} posts={allWordpressPost} post={post} />
           <div
             css={[styles.headers, styles.quote]}
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
           <div className="col-12" style={{ marginTop: 70 }} />
         </div>
-        <PostNavigation posts={allWordpressPost} date={post.date} />
+        {/* <PostNavigation posts={allWordpressPost} date={post.date} /> */}
         <div
           className="row"
           style={{
@@ -105,7 +109,7 @@ class PostTemplate extends Component {
           }}
         >
           <div className="col-12 col-md-8 offset-md-2">
-            <LastDays activities={allPhoenixDaily} posts={allWordpressPost} />
+            <LastDays activities={allPhoenixDaily} posts={allWordpressPost} language={language} />
           </div>
           <div className="col-12" style={{ marginTop: 30 }} />
         </div>
@@ -223,6 +227,10 @@ export const pageQuery = graphql`
           slug
           date
           categories {
+            id
+            name
+          }
+          tags {
             id
             name
           }
