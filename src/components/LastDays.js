@@ -224,6 +224,7 @@ class LastDays extends React.Component {
   }
 
   renderActivities({ activities }) {
+    const { language = "en" } = this.props;
     if (activities.length === 0) {
       return null;
     }
@@ -254,7 +255,7 @@ class LastDays extends React.Component {
 
     const groupKeys = Object.keys(group);
 
-    return <Activities activities={group} />;
+    return <Activities activities={group} language={language} />;
   }
 
   render() {
