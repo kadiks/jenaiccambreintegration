@@ -35,14 +35,15 @@ class MorningRoutine extends React.Component {
     return items;
   }
   render() {
-    const { activities } = this.props;
+    const { activities, language } = this.props;
     const items = this.getItemsFromActivities({ activities });
     if (items.length === 0) {
       return null;
     }
+    const routineText = language === "en" ? "Morning routine" : "Routine matinale";
     return (
       <div>
-        <h5 style={{ margin: "10px 0 3px" }}>Morning routine</h5>
+        <h5 style={{ margin: "10px 0 3px" }}>{routineText}</h5>
         {items.map((i, index) => <span key={index}>{i}</span>)}
       </div>
     );

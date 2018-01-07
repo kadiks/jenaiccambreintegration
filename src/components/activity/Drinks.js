@@ -31,14 +31,15 @@ class Drinks extends React.Component {
   }
 
   render() {
-    const { activities } = this.props;
+    const { activities, language } = this.props;
     const drinks = this.getDrinksFromActivities({ activities });
     if (drinks.length === 0) {
       return null;
     }
+    const drinksText = language === "en" ? "Drinks" : "Boissons";
     return (
       <div>
-        <h5 style={{ margin: "10px 0 3px" }}>Drinks</h5>
+        <h5 style={{ margin: "10px 0 3px" }}>{drinksText}</h5>
         {drinks.map((d, index) => (
           <span key={index} dangerouslySetInnerHTML={{ __html: d }} />
         ))}

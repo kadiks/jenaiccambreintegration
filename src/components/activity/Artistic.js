@@ -26,14 +26,15 @@ class Artistic extends React.Component {
   }
 
   render() {
-    const { activities } = this.props;
+    const { activities, language } = this.props;
     const artistics = this.getArtisticsFromActivities({ activities });
     if (artistics.length === 0) {
       return null;
     }
+    const artisticText = language === "en" ? "Artistic" : "Artistique";
     return (
       <div>
-        <h5 style={{ margin: "10px 0 3px" }}>Artistic</h5>
+        <h5 style={{ margin: "10px 0 3px" }}>{artisticText}</h5>
         {artistics.map((a, index) => <span key={index}>{a}</span>)}
       </div>
     );

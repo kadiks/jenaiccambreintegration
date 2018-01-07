@@ -8,13 +8,13 @@ import MorningRoutine from "./MorningRoutine";
 class Activity extends React.Component {
   render() {
     // console.log(">> cmp/activity#render");
-    const { activities } = this.props;
+    const { activities, language = "en" } = this.props;
     return (
       <div>
-        <Meals activities={activities} />
-        <Artistic activities={activities} />
-        <Drinks activities={activities} />
-        <MorningRoutine activities={activities} />
+        <Meals activities={activities} language={language} />
+        <Artistic activities={activities} language={language} />
+        <Drinks activities={activities} language={language} />
+        <MorningRoutine activities={activities} language={language} />
       </div>
     );
   }

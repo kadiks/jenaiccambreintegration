@@ -40,15 +40,16 @@ class Meals extends React.Component {
 
   render() {
     // console.log(">> cmp/activity/Meals#render");
-    const { activities } = this.props;
+    const { activities, language } = this.props;
     const meals = this.getMealsFromActivites({ activities });
     if (meals === false) {
       return null;
     }
+    const mealText = language === "en" ? "Meals" : "Repas";
     // console.log("cmp/activity/Meals#render rendering");
     return (
       <div>
-        <h5 style={{ margin: "10px 0 3px" }}>Meals</h5>
+        <h5 style={{ margin: "10px 0 3px" }}>{mealText}</h5>
         <div
           style={{
             border: `1px solid ${Styles.colors.background}`,
