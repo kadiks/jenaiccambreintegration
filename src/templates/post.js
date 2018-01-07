@@ -218,6 +218,10 @@ export const pageQuery = graphql`
       title
       content
       date
+      tags {
+        id
+        name
+      }
     }
     allWordpressPost(sort: { fields: [date], order: DESC }) {
       edges {
