@@ -56,7 +56,7 @@ class Post {
         // console.log('utils/filter/Post#getJournalPostInOtherLanguage language', language);
         // console.log('utils/filter/Post#getJournalPostInOtherLanguage post', post);
 
-        return otherLanguagePosts[0];
+        return otherLanguagePosts[0] || null;
     }
 
     getJournalPostsByLanguage({ posts, language = "en" }) {

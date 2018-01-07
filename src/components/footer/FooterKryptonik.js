@@ -8,8 +8,8 @@ export default class FooterKryptonik extends React.Component {
         const data = {
             name: "Kryptonik",
             colors: [Styles.colors.kryptonik, Styles.colors.tertiary],
-            link: "http://kryptonik.net/",
-            text: language === "en" ? "My company" : "Mon entreprise" 
+            link: "",
+            text: language === "en" ? "My company. Website coming soon" : "Mon entreprise. Site en construction" 
         };
         return <Footer data={data} language={language} />
     }
