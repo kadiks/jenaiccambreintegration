@@ -43,6 +43,22 @@ class Post {
         return filteredPosts;
     }
 
+    getJournalPostInOtherLanguage({ post, posts }) {
+        const language = this.isFrenchPost({ post }) ? "en" : "fr";
+        const detailedPost = this.getTransformedPost({ post });
+        let filteredPosts = this.getJournalPostsByLanguage({ posts, language });
+
+        const otherLanguagePosts = filteredPosts.filter(post => {
+            return detailedPost.timestamp === post.timestamp;
+        });
+
+        // console.log('utils/filter/Post#getJournalPostInOtherLanguage otherLanguagePosts', otherLanguagePosts);
+        // console.log('utils/filter/Post#getJournalPostInOtherLanguage language', language);
+        // console.log('utils/filter/Post#getJournalPostInOtherLanguage post', post);
+
+        return otherLanguagePosts[0];
+    }
+
     getJournalPostsByLanguage({ posts, language = "en" }) {
         let filteredPosts = this.getJournalPosts({ posts });
 
