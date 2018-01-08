@@ -7,6 +7,7 @@ import Styles from "../utils/Styles";
 
 import Activities from "../components/activity";
 import filterPost from "../utils/filters/Post";
+import filterActivity from "../utils/filters/Activity";
 
 class LastDays extends React.Component {
   getDays() {
@@ -23,24 +24,26 @@ class LastDays extends React.Component {
   }
 
   getActivities({ endDay, startDate }) {
-    const { edges } = this.props.activities;
-    const maxTimestamp = Number(
-      moment()
-        .subtract(endDay, "day")
-        .startOf("day")
-        .format("x")
-    );
-    const minTimestamp = Number(startDate.format('x'));
-    let activities = edges.filter(({ node }) => {
-      const date = moment(node.day);
-      node.timestamp = Number(date.format('x'));
-      // console.log("#getActivities date", node.timestamp, minTimestamp, maxTimestamp);
-      return node.timestamp <= maxTimestamp && node.timestamp >= minTimestamp;
-    });
-    activities = activities.map(day => day.node);
-    activities = _.sortBy(activities, ["day"]);
-    activities.reverse();
-    const group = this.groupArray({ grouper: "timestamp", array: activities });
+    const { activities } = this.props;
+    // const { edges } = this.props.activities;
+    // const maxTimestamp = Number(
+    //   moment()
+    //     .subtract(endDay, "day")
+    //     .startOf("day")
+    //     .format("x")
+    // );
+    // const minTimestamp = Number(startDate.format('x'));
+    // let activities = edges.filter(({ node }) => {
+    //   const date = moment(node.day);
+    //   node.timestamp = Number(date.format('x'));
+    //   // console.log("#getActivities date", node.timestamp, minTimestamp, maxTimestamp);
+    //   return node.timestamp <= maxTimestamp && node.timestamp >= minTimestamp;
+    // });
+    // activities = activities.map(day => day.node);
+    // activities = _.sortBy(activities, ["day"]);
+    // activities.reverse();
+    const filteredActivities = filterActivity.getActivities({ activities });
+    const group = this.groupArray({ grouper: "timestamp", array: filteredActivities });
     // activities = activities.slice(0, 3);
     // console.log("#getActivities group", group);
     // console.log("#getActivities activities", activities);

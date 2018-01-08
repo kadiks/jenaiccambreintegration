@@ -1,20 +1,26 @@
 import moment from 'moment';
+import Limits from './Limits';
+
+// const PUBLISH_TIME = 18;
 
 class Post {
     getJournalPosts({ posts }) {
 
-        const endDay = 31;
-        const startDate = moment([2017, 11, 5]);
+        // const endDay = 31;
+        // const startDate = moment([2017, 11, 5]);
 
         let filteredPosts = posts.edges.filter(({ node }) => {
             let isSelected = false;
-            const maxTimestamp = Number(
-                moment()
-                .subtract(endDay, "day")
-                .startOf("day")
-                .format("x")
-            );
-            const minTimestamp = Number(startDate.format('x'));
+            // const maxTimestamp = Number(
+            //     moment()
+            //     .subtract(endDay, "day")
+            //     .subtract(PUBLISH_TIME, "hour")
+            //     .startOf("day")
+            //     .format("x")
+            // );
+            // const minTimestamp = Number(startDate.format('x'));
+
+            const { minTimestamp, maxTimestamp } = Limits();
         
             node.categories.forEach(cat => {
                 if (cat.name === "Journal") {
@@ -75,11 +81,8 @@ class Post {
             // console.log('---');
             // console.log('utils/filters/Post#getJournalPostsByLanguage post.title', post.title);
             // console.log('utils/filters/Post#getJournalPostsByLanguage language', language);
-            // console.log('utils/filters/Post#getJournalPostsByLanguage tags', tags);
             // console.log('utils/filters/Post#getJournalPostsByLanguage isFrenchPost', isFrenchPost);
             // console.log('utils/filters/Post#getJournalPostsByLanguage isSelected', isSelected);
-            // console.log('utils/filters/Post#getJournalPostsByLanguage date', date);
-            // console.log('utils/filters/Post#getJournalPostsByLanguage maxTimestamp', maxTimestamp);
             // console.log('---');
             return isSelected;
         });
