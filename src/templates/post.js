@@ -12,6 +12,7 @@ import Icon from "../components/Icon";
 import LastDays from "../components/LastDays";
 import PostNavigation from "../components/post/PostNavigation";
 import OtherLanguagePost from "../components/post/OtherLanguagePost";
+import HomeLink from "../components/post/HomeLink";
 
 const headersStyle = {};
 for (let i = 0; i < 6; i++) {
@@ -78,16 +79,7 @@ class PostTemplate extends Component {
           </title>
         </Helmet>
         <div className="col-12 col-md-8 offset-md-2">
-          <Link
-            to={language === "en" ? "/" : "/fr"}
-            css={{
-              color: Styles.colors.main,
-              ":hover": { color: Styles.colors.main },
-              ":visited": { color: Styles.colors.main }
-            }}
-          >
-            <i className="fa fa-home" style={{ color: Styles.colors.main }} />
-          </Link>
+          <HomeLink language={language} />
           <small>{moment(post.date).format(language === "en" ? "ddd, Do MMM YYYY" : "dddd D MMM YYYY")}</small>
           <h1
             style={{ color: Styles.colors.main, fontSize: "2.5em" }}

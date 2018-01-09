@@ -6,14 +6,14 @@ import _ from "lodash";
 import Helmet from "react-helmet";
 
 // import PostIcons from "../components/PostIcons";
-import Styles from "../utils/Styles";
-import ProfilePicture from "../components/ProfilePicture";
-import Activities from "../components/activity";
+import Styles from "../../utils/Styles";
+import ProfilePicture from "../../components/ProfilePicture";
+import Activities from "../../components/activity";
 // import { rhythm } from "../utils/typography";
-import LastDays from "../components/LastDays";
-import FooterKyeda from '../components/footer/FooterKyeda';
-import FooterKryptonik from '../components/footer/FooterKryptonik';
-import LinkFlag from "../components/flags/Link";
+import LastDays from "../../components/LastDays";
+import FooterKyeda from '../../components/footer/FooterKyeda';
+import FooterKryptonik from '../../components/footer/FooterKryptonik';
+import LinkFlag from "../../components/flags/Link";
 
 const LANGUAGE = "fr";
 
