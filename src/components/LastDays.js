@@ -215,7 +215,11 @@ class LastDays extends React.Component {
         }}
       >
         <Link to={link} css={{ textDecoration: `none` }}>
-          <h3 style={{ color: Styles.colors.main }}>{post.title}</h3>
+          <h3
+            style={{ color: Styles.colors.main }}
+            dangerouslySetInnerHTML={{
+              __html: post.title
+            }} />
         </Link>
         <div
           dangerouslySetInnerHTML={{
