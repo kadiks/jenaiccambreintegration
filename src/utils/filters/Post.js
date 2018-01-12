@@ -4,48 +4,59 @@ import Limits from './Limits';
 // const PUBLISH_TIME = 18;
 
 class Post {
+
+    getAllJournalPosts({ posts }) {
+        
+        let filteredPosts = posts.edges.filter(({ node }) => {
+            let isSelected = false;
+        
+            node.categories.forEach(cat => {
+                if (cat.name === "Journal") {
+                    isSelected = true;
+                }
+            });
+
+            const post = this.getTransformedPost({ post: node });
+            
+            return isSelected === true;
+        });
+        filteredPosts = filteredPosts.map(p => p.node);
+
+        return filteredPosts;
+    }
+
+    getAllJournalPostsByLanguage({ posts, language = "en" }) {
+        let filteredPosts = this.getAllJournalPosts({ posts });
+
+        filteredPosts = filteredPosts.filter(post => {
+            let isSelected = true;
+            const isFrenchPost = this.isFrenchPost({ post });
+            if (language === "en" && isFrenchPost === true) {
+                isSelected = false;
+            }
+            if (language === "fr" && isFrenchPost === false) {
+                isSelected = false;
+            }
+            return isSelected;
+        });
+
+        return filteredPosts;
+    }
+
+
     getJournalPosts({ posts }) {
 
         // const endDay = 31;
         // const startDate = moment([2017, 11, 5]);
+        let filteredPosts = this.getAllJournalPosts({ posts });
 
-        let filteredPosts = posts.edges.filter(({ node }) => {
-            let isSelected = false;
-            // const maxTimestamp = Number(
-            //     moment()
-            //     .subtract(endDay, "day")
-            //     .subtract(PUBLISH_TIME, "hour")
-            //     .startOf("day")
-            //     .format("x")
-            // );
-            // const minTimestamp = Number(startDate.format('x'));
+        filteredPosts = filteredPosts.filter(post => {
 
             const { minTimestamp, maxTimestamp } = Limits();
         
-            node.categories.forEach(cat => {
-                if (cat.name === "Journal") {
-                isSelected = true;
-                }
-            });
-            let tags = node.tags || [];
-            tags = tags.map(t => t.name);
-
-            const post = this.getTransformedPost({ post: node });
-            
-            // console.log('---');
-            // console.log('utils/filters/Post#getPosts node', node);
-            // console.log('utils/filters/Post#getPosts language', language);
-            // console.log('utils/filters/Post#getPosts tags', tags);
-            // console.log('utils/filters/Post#getPosts isFrenchPost', this.isFrenchPost({ post: node }));
-            // console.log('utils/filters/Post#getPosts isSelected', isSelected);
-            // console.log('utils/filters/Post#getPosts isSelected', );
-            // console.log('utils/filters/Post#getPosts date', date);
-            // console.log('utils/filters/Post#getPosts maxTimestamp', maxTimestamp);
-            // console.log('---');
-            return isSelected === true && post.timestamp <= maxTimestamp && post.timestamp >= minTimestamp;
+            return post.timestamp <= maxTimestamp && post.timestamp >= minTimestamp;
         });
 
-        filteredPosts = filteredPosts.map(p => p.node);
         return filteredPosts;
     }
 
@@ -99,6 +110,8 @@ class Post {
             y: date.format("YYYY"),
             d: date.format("DD")
         };
+        const language = this.isFrenchPost({ post }) ? "fr" : "en";
+        post.url = `${language}/${post.dateObject.y}/${post.dateObject.m}/${post.dateObject.d}/${post.slug}`;
         return post;
     }
 

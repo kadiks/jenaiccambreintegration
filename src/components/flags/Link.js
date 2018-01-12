@@ -6,7 +6,10 @@ import Styles from '../../utils/Styles';
 export default class FlagLink extends React.Component {
     render() {
         const { language = "fr", link = null } = this.props;
-        let url = language === "fr" ? `/fr/${link}` : `/${link}`;
+        let url = language === "fr" ? `/fr/` : `/`;
+        if (link !== null) {
+            url = `${url}${link}`;
+        }
         const code = language === "en" ? "gb" : language; 
         return (
             <div className="col-12 col-md-8 offset-md-2">

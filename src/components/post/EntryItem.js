@@ -1,6 +1,7 @@
 import React from "react";
 import moment from "moment";
 import "moment/min/locales.min";
+import Link from "gatsby-link";
 
 import Styles from "../../utils/Styles";
 
@@ -16,7 +17,15 @@ class EntryItem extends React.Component {
                 <p>{moment(post.date).format(language === "en" ? "ddd, Do MMM YYYY" : "ddd DD MMM YYYY")}</p>
                 <h2 style={{
                     color: Styles.colors.main
-                }}>{post.title}</h2>
+                }}>
+                    <Link
+                        to={post.url}
+                        style={{
+                            color: Styles.colors.main,
+                            textDecoration: "none"
+                        }}
+                        dangerouslySetInnerHTML={{ __html: post.title }} />
+                </h2>
             </li>
         );
     }
