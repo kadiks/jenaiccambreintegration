@@ -2,6 +2,7 @@ import React from "react";
 import Link from "gatsby-link";
 import moment from "moment";
 import _ from "lodash";
+import filterPosts from '../../utils/filters/Post';
 
 import Styles from "../../utils/Styles";
 
@@ -72,18 +73,26 @@ class PostNavigation extends React.Component {
               name={index === 0 ? "" : "caret-right"}
             />
           </p>
-          <h4 css={styles.header}>{post.title}</h4>
+          <h4 css={styles.header} dangerouslySetInnerHTML={{
+              __html: post.title
+            }} />
         </Link>
       </div>
     );
   }
 
   render() {
-    const posts = this.getNextDaysPosts();
+    const { language = "en", post, posts } = this.props;
+    const nextPosts = filterPosts.getNextDaysPosts({
+      post,
+      posts,
+      language
+    });
     return (
       <div className="col-12 col-sm-8 offset-sm-2">
         <div className="row">
-          {posts.map((post, index) => this.renderPost({ post, index }))}
+          {this.renderPost({ post: nextPosts.next, index: 0 })}
+          {this.renderPost({ post: nextPosts.prev, index: 1 })}
         </div>
       </div>
     );

@@ -101,6 +101,32 @@ class Post {
         return filteredPosts;
     }
 
+    getNextDaysPosts({ post, posts, language }) {
+        let filteredPosts = this.getJournalPostsByLanguage({ posts, language });
+
+        const todayTimestamp = moment(post.date).startOf("day");
+        const yesterdayTimestamp = Number(todayTimestamp.subtract(1, "day").format("x"));
+        const tomorrowTimestamp = Number(todayTimestamp.add(2, "day").format("x"));
+
+        const selectedPosts = {next: null, prev: null };
+
+        filteredPosts.forEach(curPost => {
+            const { timestamp } = curPost;
+            if (timestamp === yesterdayTimestamp) {
+                selectedPosts.prev = curPost;
+            }
+            if (timestamp === tomorrowTimestamp) {
+                selectedPosts.next = curPost;
+            }
+        });
+
+        console.log('src/utils/filters/Post#getNextDaysPosts selectedPosts.length', selectedPosts);
+
+        // filteredPosts = _.sortBy(filteredPosts, ['timestamp']);
+
+        return selectedPosts;
+    }
+
     getTransformedPost({ post }) {
         const date = moment(post.date).startOf("day");
             

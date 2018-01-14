@@ -92,7 +92,7 @@ class PostTemplate extends Component {
           />
           <div className="col-12" style={{ marginTop: 70 }} />
         </div>
-        {/* <PostNavigation posts={allWordpressPost} date={post.date} /> */}
+        <PostNavigation posts={allWordpressPost} post={post} language={language} />
         <div
           className="row"
           style={{
