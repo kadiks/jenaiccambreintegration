@@ -108,7 +108,7 @@ class Post {
         const yesterdayTimestamp = Number(todayTimestamp.subtract(1, "day").format("x"));
         const tomorrowTimestamp = Number(todayTimestamp.add(2, "day").format("x"));
 
-        const selectedPosts = {next: null, prev: null };
+        const selectedPosts = { next: null, prev: null };
 
         filteredPosts.forEach(curPost => {
             const { timestamp } = curPost;
@@ -120,7 +120,7 @@ class Post {
             }
         });
 
-        console.log('src/utils/filters/Post#getNextDaysPosts selectedPosts.length', selectedPosts);
+        // console.log('src/utils/filters/Post#getNextDaysPosts selectedPosts.length', selectedPosts);
 
         // filteredPosts = _.sortBy(filteredPosts, ['timestamp']);
 
