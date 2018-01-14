@@ -29,7 +29,7 @@ export default class OtherPost extends React.Component {
         return (
             <p>
                 <small style={{ fontStyle: "italic" }}>
-                    <FlagIcon code={language === "en" ? "fr" : "gb"} /> {availableText}<Link to={link} dangerouslySetInnerHTML={{ __html: post.title }} />
+                    <FlagIcon code={language === "en" ? "fr" : "gb"} /> {availableText}<Link to={link} dangerouslySetInnerHTML={{ __html: curPost.title }} />
                 </small>
             </p>
         );
