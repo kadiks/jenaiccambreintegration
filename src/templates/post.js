@@ -13,6 +13,7 @@ import LastDays from "../components/LastDays";
 import PostNavigation from "../components/post/PostNavigation";
 import OtherLanguagePost from "../components/post/OtherLanguagePost";
 import HomeLink from "../components/post/HomeLink";
+import Comments from "../components/post/Comments";
 
 const headersStyle = {};
 for (let i = 0; i < 6; i++) {
@@ -93,6 +94,7 @@ class PostTemplate extends Component {
           <div className="col-12" style={{ marginTop: 70 }} />
         </div>
         <PostNavigation posts={allWordpressPost} post={post} language={language} />
+        <Comments language={language} />
         <div
           className="row"
           style={{
