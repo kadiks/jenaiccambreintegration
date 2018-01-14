@@ -21,6 +21,7 @@
     "gatsby-source-phoenixjenaiccambre": "0.1.0",
     "gatsby-source-wordpress": "^2.0.42",
     "gatsby-transformer-sharp": "^1.6.5",
+    "jimp": "^0.2.28",
     "lodash": "^4.17.4",
     "moment": "^2.20.0",
     "prop-types": "^15.6.0",
