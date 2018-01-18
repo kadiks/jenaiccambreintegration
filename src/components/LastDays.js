@@ -269,6 +269,12 @@ class LastDays extends React.Component {
     let days = this.getDays();
     const { language = "en" } = this.props;
     moment.locale(language);
+    const linkEntries = language === "en" ?
+      "/entries" :
+      "/fr/entries";
+    const textEntries = language === "en" ?
+      "See all entries" :
+      "Voir tous articles";
     // console.log("cmp/LastDays#render days", days);
     // console.log("cmp/LastDays#render React.version", React.version);
     days = days.slice(0, 3);
@@ -277,6 +283,11 @@ class LastDays extends React.Component {
         {days.map(({ post, activities }, index) =>
           this.renderDay({ post, activities, index })
         )}
+        <div className="col-12" style={{ textAlign: 'right' }}>
+          <Link to={linkEntries} style={{
+            color: Styles.colors.background
+          }}>{textEntries}</Link>
+        </div>
       </div>
     );
   }

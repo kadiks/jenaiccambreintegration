@@ -23,7 +23,10 @@ class Entries extends Component {
   render() {
     const data = this.props.data;
     // console.log("pages/index#render data", this.props.data);
-    const method = 'getAllJournalPostsByLanguage'; //'getJournalPostsByLanguage';
+    // console.log("pages/index#render data", this.props.data);
+    const method = process.env.NODE_ENV !== "production" ?
+      'getAllJournalPostsByLanguage' :
+      'getJournalPostsByLanguage';
     const posts = filterPost[method]({
         posts: data.allWordpressPost,
         language: LANGUAGE
