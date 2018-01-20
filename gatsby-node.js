@@ -4,6 +4,9 @@ const path = require(`path`);
 const slash = require(`slash`);
 const moment = require("moment");
 
+const imagePrinter = require("./src/utils/printer/Image");
+const filterPost = require("./src/utils/filters/Post");
+
 // Implement the Gatsby API “createPages”. This is
 // called after the Gatsby bootstrap is finished so you have
 // access to any information necessary to programmatically
@@ -76,6 +79,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                     id
                     date
                     slug
+                    title
                     status
                     template
                     format
@@ -87,7 +91,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
               }
             }
           `
-        ).then(result => {
+        ).then(async result => {
           if (result.errors) {
             console.log(result.errors);
             reject(result.errors);
@@ -96,12 +100,38 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           // We want to create a detailed page for each
           // post node. We'll just use the Wordpress Slug for the slug.
           // The Post ID is prefixed with 'POST_'
-          _.each(result.data.allWordpressPost.edges, edge => {
+          // _.each(result.data.allWordpressPost.edges, async edge => {
+          //   // console.log("gatsby-node results", edge);
+          //   const date = edge.node.date;
+          //   const slug = edge.node.slug;
+          //   const tags = edge.node.tags || [];
+          //   const daySlug = getDaySlug({ slug, date, tags });
+          //   const post = filterPost.getTransformedPost({ post: edge.node });
+
+          //   // await imagePrinter.printSocialMediaCard({
+          //   //   post,
+          //   // });
+            
+          //   createPage({
+          //     path: daySlug,
+          //     component: slash(postTemplate),
+          //     context: {
+          //       id: edge.node.id
+          //     }
+          //   });
+          // });
+          await Promise.all(result.data.allWordpressPost.edges.map(async (edge) => {
             // console.log("gatsby-node results", edge);
             const date = edge.node.date;
             const slug = edge.node.slug;
             const tags = edge.node.tags || [];
             const daySlug = getDaySlug({ slug, date, tags });
+            const post = filterPost.getTransformedPost({ post: edge.node });
+
+            // await imagePrinter.printSocialMediaCard({
+            //   post,
+            // });
+            
             createPage({
               path: daySlug,
               component: slash(postTemplate),
@@ -109,7 +139,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                 id: edge.node.id
               }
             });
-          });
+          }));
           resolve();
         });
       });

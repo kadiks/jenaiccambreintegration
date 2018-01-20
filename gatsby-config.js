@@ -19,6 +19,7 @@ module.exports = {
       }
     },
     "gatsby-source-phoenixjenaiccambre",
+    "gatsby-plugin-react-helmet",
     // https://public-api.wordpress.com/wp/v2/sites/gatsbyjsexamplewordpress.wordpress.com/pages/
     /*
      * Gatsby's data processing layer begins with “source”

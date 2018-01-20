@@ -14,6 +14,7 @@ import PostNavigation from "../components/post/PostNavigation";
 import OtherLanguagePost from "../components/post/OtherLanguagePost";
 import HomeLink from "../components/post/HomeLink";
 import Comments from "../components/post/Comments";
+import filterPost from '../utils/filters/Post';
 
 const headersStyle = {};
 for (let i = 0; i < 6; i++) {
@@ -60,7 +61,7 @@ const styles = {
 
 class PostTemplate extends Component {
   render() {
-    // console.log("this.props.data", this.props.data);
+    // console.log("templates/post#render this.props", this.props);
     const {
       wordpressPost,
       site,
@@ -69,7 +70,7 @@ class PostTemplate extends Component {
     } = this.props.data;
     const language = this.props.location.pathname.slice(1, 3);
     moment.locale(language);
-    const post = wordpressPost;
+    const post = filterPost.getTransformedPost({ post: wordpressPost });
 
     return (
       <div>
@@ -78,6 +79,26 @@ class PostTemplate extends Component {
             {post.title} | {site.siteMetadata.title} -
             {site.siteMetadata.subtitle}
           </title>
+
+          {/* <!--  Essential META Tags --> */}
+
+          <meta property="og:title" content={post.title} />
+          <meta property="og:description" content={`${post.excerpt.slice(0,197)}...`} />
+          <meta property="og:image" content={`http://jenaiccambre.com/static/${post.url}.png`} />
+          <meta property="og:url" content={`http://jenaiccambre.com/${post.url}`} />
+          <meta name="twitter:card" content="summary_large_image" />
+
+
+          {/* <!--  Non-Essential, But Recommended --> */}
+
+          <meta property="og:site_name" content={site.siteMetadata.title} />
+          <meta name="twitter:image:alt" content="Alt text for image" />
+
+
+          {/* <!--  Non-Essential, But Required for Analytics --> */}
+
+          {/* <meta property="fb:app_id" content="your_app_id" /> */}
+          <meta name="twitter:site" content="@kadiks" />
         </Helmet>
         <div className="col-12 col-md-8 offset-md-2">
           <HomeLink language={language} />
@@ -211,6 +232,8 @@ export const pageQuery = graphql`
     wordpressPost(id: { eq: $id }) {
       title
       content
+      excerpt
+      slug
       date
       tags {
         id

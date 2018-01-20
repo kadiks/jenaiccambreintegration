@@ -1,5 +1,5 @@
-import moment from 'moment';
-import Limits from './Limits';
+const moment = require('moment');
+const Limits = require('./Limits');
 
 // const PUBLISH_TIME = 18;
 
@@ -41,6 +41,10 @@ class Post {
         });
 
         return filteredPosts;
+    }
+
+    getDateFormatLanguage({ language = "en" }) {
+        return language === "en" ? "ddd, Do MMM YYYY" : "dddd D MMM YYYY";
     }
 
 
@@ -148,4 +152,4 @@ class Post {
     }
 }
 
-export default new Post();
+module.exports = new Post();
