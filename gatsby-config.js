@@ -46,8 +46,8 @@ module.exports = {
         verboseOutput: true
       }
     },
-    /*`gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,*/
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`,
     `gatsby-plugin-glamor`
   ]
 };

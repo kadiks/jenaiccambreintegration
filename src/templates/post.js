@@ -5,6 +5,7 @@ import Link from "gatsby-link";
 import Helmet from "react-helmet";
 import styled from "styled-components";
 import moment from "moment";
+import Entities from 'html-entities';
 
 import Styles from "../utils/Styles";
 
@@ -15,6 +16,7 @@ import OtherLanguagePost from "../components/post/OtherLanguagePost";
 import HomeLink from "../components/post/HomeLink";
 import Comments from "../components/post/Comments";
 import filterPost from '../utils/filters/Post';
+import ImagePost from "../components/post/Image";
 
 const headersStyle = {};
 for (let i = 0; i < 6; i++) {
@@ -60,8 +62,13 @@ const styles = {
 };
 
 class PostTemplate extends Component {
+  constructor(props) {
+    super(props);
+
+    this.entities = new Entities.AllHtmlEntities();
+  }
   render() {
-    // console.log("templates/post#render this.props", this.props);
+    console.log("templates/post#render this.props", this.props);
     const {
       wordpressPost,
       site,
@@ -71,18 +78,19 @@ class PostTemplate extends Component {
     const language = this.props.location.pathname.slice(1, 3);
     moment.locale(language);
     const post = filterPost.getTransformedPost({ post: wordpressPost });
+    const title = this.entities.decode(post.title);
 
     return (
       <div>
         <Helmet>
           <title>
-            {post.title} | {site.siteMetadata.title} -
+            {title} | {site.siteMetadata.title} -
             {site.siteMetadata.subtitle}
           </title>
 
           {/* <!--  Essential META Tags --> */}
 
-          <meta property="og:title" content={post.title} />
+          <meta property="og:title" content={title} />
           <meta property="og:description" content={`${post.excerpt.slice(0,197)}...`} />
           <meta property="og:image" content={`http://jenaiccambre.com/static/${post.url}.png`} />
           <meta property="og:url" content={`http://jenaiccambre.com/${post.url}`} />
@@ -98,11 +106,12 @@ class PostTemplate extends Component {
           {/* <!--  Non-Essential, But Required for Analytics --> */}
 
           {/* <meta property="fb:app_id" content="your_app_id" /> */}
-          <meta name="twitter:site" content="@kadiks" />
+          <meta name="twitter:site" content={language === "en" ? "@kadiks" : "@jenaiccambre"} />
         </Helmet>
         <div className="col-12 col-md-8 offset-md-2">
           <HomeLink language={language} />
           <small>{moment(post.date).format(language === "en" ? "ddd, Do MMM YYYY" : "dddd D MMM YYYY")}</small>
+          <ImagePost post={post} />
           <h1
             style={{ color: Styles.colors.main, fontSize: "2.5em" }}
             dangerouslySetInnerHTML={{ __html: post.title }}
@@ -238,6 +247,17 @@ export const pageQuery = graphql`
       tags {
         id
         name
+      }
+      featured_media {
+        id
+        link
+        localFile {
+          childImageSharp {
+            sizes(maxWidth: 680) {
+              ...GatsbyImageSharpSizes
+            }
+          }
+        }
       }
     }
     allWordpressPost(sort: { fields: [date], order: DESC }) {
