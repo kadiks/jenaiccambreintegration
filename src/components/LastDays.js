@@ -1,13 +1,13 @@
-import React from "react";
-import moment from "moment";
-import "moment/min/locales.min";
-import Link from "gatsby-link";
+import React from 'react';
+import moment from 'moment';
+import 'moment/min/locales.min';
+import Link from 'gatsby-link';
 
-import Styles from "../utils/Styles";
+import Styles from '../utils/Styles';
 
-import Activities from "../components/activity";
-import filterPost from "../utils/filters/Post";
-import filterActivity from "../utils/filters/Activity";
+import Activities from '../components/activity';
+import filterPost from '../utils/filters/Post';
+import filterActivity from '../utils/filters/Activity';
 
 class LastDays extends React.Component {
   getDays() {
@@ -43,7 +43,10 @@ class LastDays extends React.Component {
     // activities = _.sortBy(activities, ["day"]);
     // activities.reverse();
     const filteredActivities = filterActivity.getActivities({ activities });
-    const group = this.groupArray({ grouper: "timestamp", array: filteredActivities });
+    const group = this.groupArray({
+      grouper: 'timestamp',
+      array: filteredActivities
+    });
     // activities = activities.slice(0, 3);
     // console.log("#getActivities group", group);
     // console.log("#getActivities activities", activities);
@@ -53,12 +56,18 @@ class LastDays extends React.Component {
   getPosts({ endDay, startDate }) {
     const { posts, language } = this.props;
 
-    let filteredPosts = filterPost.getJournalPostsByLanguage({ posts, language });
+    let filteredPosts = filterPost.getJournalPostsByLanguage({
+      posts,
+      language
+    });
     // console.log('cmp/LastDays#getPosts filteredPosts', filteredPosts);
-    filteredPosts = _.sortBy(filteredPosts, ["timestamp"]);
+    filteredPosts = _.sortBy(filteredPosts, ['timestamp']);
     filteredPosts.reverse();
     // posts = posts.slice(0, 3);
-    const group = this.groupArray({ grouper: "timestamp", array: filteredPosts });
+    const group = this.groupArray({
+      grouper: 'timestamp',
+      array: filteredPosts
+    });
     // console.log('cmp/LastDays#getPosts group', group);
     // console.log('cmp/LastDays#getPosts posts', posts);
     return group;
@@ -141,7 +150,7 @@ class LastDays extends React.Component {
   isFrenchPost({ post }) {
     const tags = post.tags || [];
     const tagNames = tags.map(t => t.name);
-    return tagNames.includes("french");
+    return tagNames.includes('french');
   }
 
   mergeIntoDays({ posts, activities }) {
@@ -172,18 +181,15 @@ class LastDays extends React.Component {
   renderDay({ post, activities, index }) {
     // console.log("pages/index#renderDay post", post);
     // console.log("pages/index#renderDay activities", this.props.language);
-    const { language = "en" } = this.props;
+    const { language = 'en' } = this.props;
     moment.locale(language);
-    const dateFormat = language === "en" ?
-      "ddd MMM, Do" :
-      "ddd DD MMM"
-    ;
+    const dateFormat = language === 'en' ? 'ddd MMM, Do' : 'ddd DD MMM';
     const date = post.date || activities[0].timestamp;
     return (
       <div className="col-12 col-xs-12 col-sm-4" key={index}>
         <h2
           style={{
-            textAlign: "center"
+            textAlign: 'center'
           }}
         >
           {moment(date).format(dateFormat)}
@@ -199,18 +205,20 @@ class LastDays extends React.Component {
       return;
     }
 
-    const { language = "en" } = this.props;
+    const { language = 'en' } = this.props;
 
-    const link = `${language}/${post.dateObject.y}/${post.dateObject.m}/${
-      post.dateObject.d
-    }/${post.slug}`;
+    // const link = `${language}/${post.dateObject.y}/${post.dateObject.m}/${
+    //   post.dateObject.d
+    // }/${post.slug}`;
+    const link = post.url;
+    // console.log("LastDays#renderSummary link", link);
     return (
       <div
         style={{
           backgroundColor: Styles.colors.background,
           color: Styles.colors.body,
-          padding: "1px 15px",
-          boxShadow: "10px 15px rgba(0, 0, 0, 0.2)",
+          padding: '1px 15px',
+          boxShadow: '10px 15px rgba(0, 0, 0, 0.2)',
           marginBottom: 25
         }}
       >
@@ -219,7 +227,8 @@ class LastDays extends React.Component {
             style={{ color: Styles.colors.main }}
             dangerouslySetInnerHTML={{
               __html: post.title
-            }} />
+            }}
+          />
         </Link>
         <div
           dangerouslySetInnerHTML={{
@@ -231,18 +240,18 @@ class LastDays extends React.Component {
   }
 
   renderActivities({ activities }) {
-    const { language = "en" } = this.props;
+    const { language = 'en' } = this.props;
     if (activities.length === 0) {
       return null;
     }
-    const privateActivities = ["sex", "solo_pleasure"];
+    const privateActivities = ['sex', 'solo_pleasure'];
     const extractedActivities = [
-      "dinner",
-      "lunch",
-      "breakfast",
-      "snacks_as_breakfast",
-      "snacks_as_lunch",
-      "snacks_as_dinner"
+      'dinner',
+      'lunch',
+      'breakfast',
+      'snacks_as_breakfast',
+      'snacks_as_lunch',
+      'snacks_as_dinner'
     ];
 
     _.remove(activities, a => privateActivities.includes(a.slug));
@@ -267,14 +276,11 @@ class LastDays extends React.Component {
 
   render() {
     let days = this.getDays();
-    const { language = "en" } = this.props;
+    const { language = 'en' } = this.props;
     moment.locale(language);
-    const linkEntries = language === "en" ?
-      "/entries" :
-      "/fr/entries";
-    const textEntries = language === "en" ?
-      "See all entries" :
-      "Voir tous articles";
+    const linkEntries = language === 'en' ? '/entries' : '/fr/entries';
+    const textEntries =
+      language === 'en' ? 'See all entries' : 'Voir tous articles';
     // console.log("cmp/LastDays#render days", days);
     // console.log("cmp/LastDays#render React.version", React.version);
     days = days.slice(0, 3);
@@ -284,9 +290,15 @@ class LastDays extends React.Component {
           this.renderDay({ post, activities, index })
         )}
         <div className="col-12" style={{ textAlign: 'right' }}>
-          <Link to={linkEntries} style={{
-            color: Styles.colors.background
-          }}>{textEntries}</Link>
+          <Link
+            to={linkEntries}
+            style={{
+              color: Styles.colors.background,
+              textDecoration: 'none'
+            }}
+          >
+            {textEntries}
+          </Link>
         </div>
       </div>
     );

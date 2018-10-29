@@ -7,19 +7,19 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-fonts`,
       options: {
-        fonts: [`Raleway:600`, "Lato:300"]
+        fonts: [`Raleway:600`, 'Lato:300']
       }
     },
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        trackingId: "UA-12326200-2",
+        trackingId: 'UA-12326200-2',
         // Setting this parameter is optional
         anonymize: true
       }
     },
-    "gatsby-source-phoenixjenaiccambre",
-    "gatsby-plugin-react-helmet",
+    'gatsby-source-phoenixjenaiccambre',
+    'gatsby-plugin-react-helmet',
     // https://public-api.wordpress.com/wp/v2/sites/gatsbyjsexamplewordpress.wordpress.com/pages/
     /*
      * Gatsby's data processing layer begins with “source”

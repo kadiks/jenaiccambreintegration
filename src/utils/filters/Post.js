@@ -7,10 +7,20 @@ class Post {
 
     getAllJournalPosts({ posts }) {
         
-        let filteredPosts = posts.edges.filter(this.isJournalPost);
-        filteredPosts = filteredPosts.map(p =>
-            this.getTransformedPost({ post: p.node })
-        );
+        let filteredPosts = posts.edges.filter(({ node }) => {
+            let isSelected = false;
+        
+            node.categories.forEach(cat => {
+                if (cat.name === "Journal") {
+                    isSelected = true;
+                }
+            });
+
+            const post = this.getTransformedPost({ post: node });
+            
+            return isSelected === true;
+        });
+        filteredPosts = filteredPosts.map(p => p.node);
 
         return filteredPosts;
     }
@@ -131,7 +141,7 @@ class Post {
             d: date.format("DD")
         };
         const language = this.isFrenchPost({ post }) ? "fr" : "en";
-        post.url = `${language}/${post.dateObject.y}/${post.dateObject.m}/${post.dateObject.d}/${post.slug}`;
+        post.url = `/${language}/${post.dateObject.y}/${post.dateObject.m}/${post.dateObject.d}/${post.slug}`;
         return post;
     }
 
@@ -139,18 +149,6 @@ class Post {
         const tags = post.tags || [];
         const tagNames = tags.map(t => t.name);
         return tagNames.includes("french");
-    }
-
-    isJournalPost({ node }) {
-        let isSelected = false;
-    
-        node.categories.forEach(cat => {
-            if (cat.name === "Journal") {
-                isSelected = true;
-            }
-        });
-        
-        return isSelected === true;
     }
 }
 

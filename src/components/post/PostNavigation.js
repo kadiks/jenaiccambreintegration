@@ -62,7 +62,7 @@ class PostNavigation extends React.Component {
     return (
       <div className="col-6" key={index} style={{ marginBottom: 30 }}>
         <Link
-          to={`/${post.url}`}
+          to={post.url}
           css={[{ textDecoration: "none" }, styles.text]}
         >
           <p css={styles.paragraph}>

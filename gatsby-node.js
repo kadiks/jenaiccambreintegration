@@ -3,6 +3,7 @@ const Promise = require(`bluebird`);
 const path = require(`path`);
 const slash = require(`slash`);
 const moment = require("moment");
+const fs = require('fs-extra');
 
 const imagePrinter = require("./src/utils/printer/Image");
 const filterPost = require("./src/utils/filters/Post");
@@ -120,6 +121,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           //     }
           //   });
           // });
+          const translationPostMap = [];
           await Promise.all(result.data.allWordpressPost.edges.map(async (edge) => {
             // console.log("gatsby-node results", edge);
             const date = edge.node.date;
@@ -127,6 +129,20 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             const tags = edge.node.tags || [];
             const daySlug = getDaySlug({ slug, date, tags });
             const post = filterPost.getTransformedPost({ post: edge.node });
+
+            // const translatedPost = filterPost.getJournalPostInOtherLanguage({
+            //   post: edge.node,
+            //   posts: result.data.allWordpressPost
+            // });
+
+            // console.log("translatedPost", translatedPost)
+
+            // if (translatedPost !== null) {
+            //   const translationEntry = {};
+            //   translationEntry[post.language] = post.url;
+            //   translationEntry[translatedPost.language] = translatedPost.url;
+            //   translationPostMap.push(translationEntry);
+            // }
 
             // await imagePrinter.printSocialMediaCard({
             //   post,
@@ -140,6 +156,8 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
               }
             });
           }));
+          // console.log("translationPostMap.length", translationPostMap.length);
+          // await fs.writeFile("./translationmap.json", JSON.stringify(translationPostMap, null, 2), 'utf8');
           resolve();
         });
       });

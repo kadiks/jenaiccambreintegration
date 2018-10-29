@@ -25,7 +25,8 @@ export default class OtherPost extends React.Component {
             return null;
         }
 
-        const link = `${language === "en" ? "fr" : "en"}/${curPost.dateObject.y}/${curPost.dateObject.m}/${curPost.dateObject.d}/${curPost.slug}`;
+        // const link = `${language === "en" ? "fr" : "en"}/${curPost.dateObject.y}/${curPost.dateObject.m}/${curPost.dateObject.d}/${curPost.slug}`;
+        const link = curPost.url;
         return (
             <p>
                 <small style={{ fontStyle: "italic" }}>

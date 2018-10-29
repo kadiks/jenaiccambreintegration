@@ -68,7 +68,7 @@ class PostTemplate extends Component {
     this.entities = new Entities.AllHtmlEntities();
   }
   render() {
-    console.log("templates/post#render this.props", this.props);
+    // console.log("templates/post#render this.props", this.props);
     const {
       wordpressPost,
       site,
